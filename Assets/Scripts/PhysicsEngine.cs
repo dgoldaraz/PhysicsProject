@@ -5,12 +5,11 @@ using System.Collections.Generic;
 
 public class PhysicsEngine : MonoBehaviour {
 
-    public Vector3 velocityVector; //average velocity call in FixdUpdate
+    public Vector3 velocityVector; //average velocity call in FixdUpdate  [m s^-1]
 
-    public Vector3 netForce;
+    public Vector3 netForce; //  N [kg m s^-2]
+    public float mass = 1.0f; //[kg]
     private List<Vector3> forceVectorList = new List<Vector3>();
-    public float mass = 1.0f;
-
 
     public bool showTrails = true;
     private LineRenderer lineRenderer;
