@@ -46,7 +46,6 @@ public class RocketEngine : MonoBehaviour {
 
         //Fn = m * v => m = Fn / v
         effectiveExhaustVelocity = 4462f; // Bipropellant liquid rocket https://en.wikipedia.org/wiki/Specific_impulse#Specific_impulse_as_a_speed_.28effective_exhaust_velocity.29 
-
         exhaustMassFlow = currentThrust / effectiveExhaustVelocity;
 
         return exhaustMassFlow * Time.deltaTime; // [kg]

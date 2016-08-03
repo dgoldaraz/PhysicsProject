@@ -14,7 +14,6 @@ public class PhysicsEngine : MonoBehaviour {
     public bool showTrails = true;
     private LineRenderer lineRenderer;
 
-
     // Use this for initialization
     void Start ()
     {
@@ -36,7 +35,7 @@ public class PhysicsEngine : MonoBehaviour {
     /// </summary>
     void FixedUpdate()
     {
-        DrawTrails();
+        DrawTrails(); 
         UpdatePosition();
     }
 
@@ -48,6 +47,7 @@ public class PhysicsEngine : MonoBehaviour {
     {
         forceVectorList.Add(newForce);
     }
+
 
     /// <summary>
     /// Updates the position dependant on the acceleration (forces) and velocity
