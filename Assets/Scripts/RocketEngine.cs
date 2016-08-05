@@ -10,9 +10,16 @@ public class RocketEngine : MonoBehaviour {
     public float thrustPercent; //[none]
     public Vector3 thrustUnitVector; // [none]
 
+    public string rocketName;
+    public KeyCode input;
+
     private PhysicsEngine physics;
 
     private float currentThrust; // N 
+    private float increaseThrust;
+
+    public delegate void FuelUpdate(string name, float value);
+    public static event FuelUpdate onFuelUpdate;
 
 
     // Use this for initialization
@@ -20,23 +27,39 @@ public class RocketEngine : MonoBehaviour {
     {
         physics = GetComponent<PhysicsEngine>();
         physics.mass += fuelMass;
+        increaseThrust = 1f / fuelMass;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        float nextFuelInUse = NextFuelUse();
-        if (fuelMass > nextFuelInUse)
+        if(Input.GetKey(input))
         {
-            fuelMass -= nextFuelInUse;
-            physics.mass -= nextFuelInUse;
-            ExertForce();
+            IncreaseThrust();
         }
         else
         {
-            Debug.LogWarning("Out of rocket Fuel");
+            thrustPercent = 0f;
         }
-        
+
+        if(thrustPercent > 0.0f)
+        {
+            float nextFuelInUse = NextFuelUse();
+            if (fuelMass > nextFuelInUse)
+            {
+                fuelMass -= nextFuelInUse;
+                if(onFuelUpdate != null)
+                {
+                    onFuelUpdate(rocketName, fuelMass);
+                }
+                physics.mass -= nextFuelInUse;
+                ExertForce();
+            }
+            else
+            {
+                Debug.LogWarning("Out of rocket Fuel");
+            }
+        }
     }
 
     float NextFuelUse()
@@ -59,5 +82,10 @@ public class RocketEngine : MonoBehaviour {
         currentThrust = thrustPercent * maxThrust * 1000f;
         Vector3 thrustVector = thrustUnitVector.normalized * currentThrust; // [N]
         physics.AddForce(thrustVector);
+    }
+
+    void IncreaseThrust()
+    {
+        thrustPercent = thrustPercent + increaseThrust;
     }
 }
