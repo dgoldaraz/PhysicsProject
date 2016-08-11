@@ -9,6 +9,7 @@ public class GUIAndInputManager : MonoBehaviour {
     public Text LeftFuel;
     public Text RightFuel;
     public Text CenterFuel;
+    public Text speedText;
 
 
     // Use this for initialization
@@ -18,6 +19,7 @@ public class GUIAndInputManager : MonoBehaviour {
         hideButtons();
 
         RocketEngine.onFuelUpdate += updateText;
+        InvokeRepeating("UpdateSpeed", 0.0f, 1.0f);
 	}
 	
 	// Update is called once per frame
@@ -69,6 +71,17 @@ public class GUIAndInputManager : MonoBehaviour {
                 //No Fuel!!
                 CenterFuel.color = Color.red;
             }
+        }
+    }
+
+    void UpdateSpeed()
+    {
+        GameObject player= GameObject.FindGameObjectWithTag("Rocket");
+        if(player)
+        {
+            int speed =(int)(player.GetComponent<PhysicsEngine>().velocityVector.magnitude * 100f);
+            speedText.text = "Speed: " + speed.ToString() + "km/s";
+            Debug.Log(speed);
         }
     }
 }

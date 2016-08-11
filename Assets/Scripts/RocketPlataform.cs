@@ -3,15 +3,7 @@ using System.Collections;
 
 public class RocketPlataform : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    public bool isFinalPlataform = true;
 
     void OnTriggerEnter(Collider col)
     {
@@ -20,7 +12,7 @@ public class RocketPlataform : MonoBehaviour {
             //We are on the floor, stops the spaceShip if the velocity is less than the maxVelAllowed
 
             PhysicsEngine physiscsRigidBody = col.gameObject.GetComponent<PhysicsEngine>();
-            if (physiscsRigidBody.velocityVector.magnitude < Manager.maxLandingSpeed)
+            if (physiscsRigidBody.velocityVector.magnitude * 100f < Manager.maxLandingSpeed)
             {
                 physiscsRigidBody.FreezeMovement();
                 AddForce[] forceComponent = col.gameObject.GetComponents<AddForce>();
@@ -28,9 +20,13 @@ public class RocketPlataform : MonoBehaviour {
                 {
                     f.stopForce = true;
                 }
-                //Win!!!
-                Debug.Log("Win!!");
-                GameObject.FindObjectOfType<LevelManager>().LoadNextLevel();
+                if(isFinalPlataform)
+                {
+                    //Win!!!
+                    Debug.Log("Win!!");
+                    GameObject.FindObjectOfType<LevelManager>().LoadNextLevel();
+                }
+               
             }
             else
             {
