@@ -33,7 +33,7 @@ public class GUIAndInputManager : MonoBehaviour {
         }
     }
 
-    void showButtons()
+    public void showButtons()
     {
         foreach (Button b in buttons)
         {
@@ -46,14 +46,29 @@ public class GUIAndInputManager : MonoBehaviour {
         if(name == "Left")
         {
             LeftFuel.text = "Left Fuel: " + value.ToString();
+            if(value == 0f)
+            {
+                //No Fuel!!
+                LeftFuel.color = Color.red;
+            }
         }
         if (name == "Right")
         {
             RightFuel.text = "Right Fuel: " + value.ToString();
+            if (value == 0f)
+            {
+                //No Fuel!!
+                RightFuel.color = Color.red;
+            }
         }
         if (name == "Up")
         {
             CenterFuel.text = "Center Fuel: " + value.ToString();
+            if (value == 0f)
+            {
+                //No Fuel!!
+                CenterFuel.color = Color.red;
+            }
         }
     }
 }

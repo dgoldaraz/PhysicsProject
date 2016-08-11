@@ -8,6 +8,7 @@ public class AddForce : MonoBehaviour {
     private PhysicsEngine physics;
 
     public bool countMass = true;
+    public bool stopForce = false;
 
 	// Use this for initialization
 	void Start ()
@@ -23,7 +24,9 @@ public class AddForce : MonoBehaviour {
         {
             finalForce *= physics.mass;
         }
-
-        physics.AddForce(force);
+        if(!stopForce)
+        {
+            physics.AddForce(force);
+        }
 	}
 }

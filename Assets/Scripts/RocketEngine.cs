@@ -21,6 +21,9 @@ public class RocketEngine : MonoBehaviour {
     public delegate void FuelUpdate(string name, float value);
     public static event FuelUpdate onFuelUpdate;
 
+    public ParticleSystem engineParticle;
+    private ParticleSystem.EmissionModule psEmit;
+
 
     // Use this for initialization
     void Start()
@@ -28,6 +31,15 @@ public class RocketEngine : MonoBehaviour {
         physics = GetComponent<PhysicsEngine>();
         physics.mass += fuelMass;
         increaseThrust = 1f / fuelMass;
+        //Let the UI know the fuel
+        if (onFuelUpdate != null)
+        {
+            onFuelUpdate(rocketName, fuelMass);
+        }
+        if(engineParticle)
+        {
+            psEmit = engineParticle.emission;
+        }
     }
 
     // Update is called once per frame
@@ -40,6 +52,11 @@ public class RocketEngine : MonoBehaviour {
         else
         {
             thrustPercent = 0f;
+            if(engineParticle && engineParticle.isPlaying)
+            {
+                engineParticle.Stop();
+                engineParticle.Clear();
+            }
         }
 
         if(thrustPercent > 0.0f)
@@ -54,10 +71,19 @@ public class RocketEngine : MonoBehaviour {
                 }
                 physics.mass -= nextFuelInUse;
                 ExertForce();
+                if (engineParticle && engineParticle.isStopped)
+                {
+                    psEmit.enabled = true;
+                    engineParticle.Play();
+                }
             }
             else
             {
-                Debug.LogWarning("Out of rocket Fuel");
+                fuelMass = 0f;
+                if (onFuelUpdate != null)
+                {
+                    onFuelUpdate(rocketName, fuelMass);
+                }
             }
         }
     }

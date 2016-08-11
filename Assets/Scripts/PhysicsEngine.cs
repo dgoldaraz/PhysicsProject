@@ -99,4 +99,9 @@ public class PhysicsEngine : MonoBehaviour {
             lineRenderer.enabled = false;
         }
     }
+
+    public void FreezeMovement()
+    {
+        velocityVector = Vector3.zero;
+    }
 }
