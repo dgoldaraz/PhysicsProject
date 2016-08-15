@@ -21,9 +21,15 @@ public class GUIAndInputManager : MonoBehaviour {
         RocketEngine.onFuelUpdate += updateText;
         InvokeRepeating("UpdateSpeed", 0.0f, 1.0f);
 	}
-	
-	// Update is called once per frame
-	void Update ()
+
+    void OnDestroy()
+    {
+        RocketEngine.onFuelUpdate -= updateText;
+    }
+
+
+    // Update is called once per frame
+    void Update ()
     {
 	}
 

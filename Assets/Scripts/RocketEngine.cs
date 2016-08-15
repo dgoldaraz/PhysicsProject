@@ -67,7 +67,7 @@ public class RocketEngine : MonoBehaviour {
                 fuelMass -= nextFuelInUse;
                 if(onFuelUpdate != null)
                 {
-                    onFuelUpdate(rocketName, fuelMass);
+                    //onFuelUpdate(rocketName, fuelMass);
                 }
                 physics.mass -= nextFuelInUse;
                 ExertForce();
