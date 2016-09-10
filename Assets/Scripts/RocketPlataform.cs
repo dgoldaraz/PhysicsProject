@@ -12,7 +12,8 @@ public class RocketPlataform : MonoBehaviour {
             //We are on the floor, stops the spaceShip if the velocity is less than the maxVelAllowed
 
             PhysicsEngine physiscsRigidBody = col.gameObject.GetComponent<PhysicsEngine>();
-            if (physiscsRigidBody.velocityVector.magnitude * 100f < Manager.maxLandingSpeed)
+            float velocityMagnitude = physiscsRigidBody.velocityVector.magnitude * 100f;
+            if (velocityMagnitude <= Manager.maxLandingSpeed)
             {
                 physiscsRigidBody.FreezeMovement();
                 AddForce[] forceComponent = col.gameObject.GetComponents<AddForce>();
@@ -20,11 +21,10 @@ public class RocketPlataform : MonoBehaviour {
                 {
                     f.stopForce = true;
                 }
+
                 if(isFinalPlataform)
                 {
-                    //Win!!!
-                    Debug.Log("Win!!");
-                    GameObject.FindObjectOfType<LevelManager>().LoadNextLevel();
+                    GameObject.FindObjectOfType<GUIAndInputManager>().showWinPanel();
                 }
                
             }

@@ -7,7 +7,7 @@ public class Manager : MonoBehaviour {
 
 	private static Manager mpInstance = null;
 	private static int lastLevel = 1;
-    public static float maxLandingSpeed = 100f;
+    public static float maxLandingSpeed = 200f;
 	// Use this for initialization
 	
 	void Awake()

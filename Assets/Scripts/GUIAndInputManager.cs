@@ -10,6 +10,9 @@ public class GUIAndInputManager : MonoBehaviour {
     public Text RightFuel;
     public Text CenterFuel;
     public Text speedText;
+    public Text winTextPanel;
+    public Text countDownText;
+
 
 
     // Use this for initialization
@@ -18,15 +21,16 @@ public class GUIAndInputManager : MonoBehaviour {
         buttons = GameObject.FindObjectsOfType<Button>();
         hideButtons();
 
-        RocketEngine.onFuelUpdate += updateText;
+        RocketEngine.onFuelUpdate += UpdateText;
         InvokeRepeating("UpdateSpeed", 0.0f, 1.0f);
+        winTextPanel.gameObject.SetActive(false);
+        countDownText.gameObject.SetActive(false);
 	}
 
     void OnDestroy()
     {
-        RocketEngine.onFuelUpdate -= updateText;
+        RocketEngine.onFuelUpdate -= UpdateText;
     }
-
 
     // Update is called once per frame
     void Update ()
@@ -49,7 +53,29 @@ public class GUIAndInputManager : MonoBehaviour {
         }
     }
 
-    void updateText(string name, float value)
+    public void showWinPanel()
+    {
+        winTextPanel.gameObject.SetActive(true);
+        countDownText.text = "3";
+        countDownText.gameObject.SetActive(true);
+        InvokeRepeating("DecreaseCountDown", 0.0f, 1.0f);
+    }
+
+    void DecreaseCountDown()
+    {
+        int countDown = int.Parse(countDownText.text);
+        if(countDown == 0)
+        {
+            GameObject.FindObjectOfType<LevelManager>().LoadNextLevel();
+        }
+        else
+        {
+            countDown--;
+            countDownText.text = countDown.ToString();
+        }
+    }
+
+    void UpdateText(string name, float value)
     {
         if(name == "Left")
         {
@@ -87,7 +113,6 @@ public class GUIAndInputManager : MonoBehaviour {
         {
             int speed =(int)(player.GetComponent<PhysicsEngine>().velocityVector.magnitude * 100f);
             speedText.text = "Speed: " + speed.ToString() + "km/s";
-            Debug.Log(speed);
         }
     }
 }
