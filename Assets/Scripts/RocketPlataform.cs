@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class RocketPlataform : MonoBehaviour {
+public class RocketPlataform : MonoBehaviour
+{
 
     public bool isFinalPlataform = true;
 
@@ -22,15 +23,27 @@ public class RocketPlataform : MonoBehaviour {
                     f.stopForce = true;
                 }
 
-                if(isFinalPlataform)
+                if (isFinalPlataform)
                 {
                     GameObject.FindObjectOfType<GUIAndInputManager>().showWinPanel();
                 }
-               
+
             }
             else
             {
                 col.gameObject.GetComponent<Explosion>().Explode();
+            }
+        }
+    }
+
+    void OnTriggerExit(Collider col)
+    {
+        if (!isFinalPlataform && col.gameObject.CompareTag("Rocket"))
+        {
+            AddForce[] forceComponent = col.gameObject.GetComponents<AddForce>();
+            foreach (AddForce f in forceComponent)
+            {
+                f.stopForce = false;
             }
         }
     }
