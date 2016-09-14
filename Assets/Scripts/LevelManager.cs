@@ -39,11 +39,16 @@ public class LevelManager : MonoBehaviour {
 	
 	public void LoadLastLevel()
 	{
-		if(mPlayer)
+        if (mPlayer)
 		{
 			int lastLevel = mPlayer.getLastLevel();
 			print (lastLevel);
 			SceneManager.LoadScene(lastLevel);
 		}
 	}
+    
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
 }
