@@ -22,6 +22,7 @@ public class GUIAndInputManager : MonoBehaviour {
         hideButtons();
 
         RocketEngine.onFuelUpdate += UpdateText;
+        GameObject.FindObjectOfType<RocketEngine>().UpdateFuelGUI();
         InvokeRepeating("UpdateSpeed", 0.0f, 1.0f);
         winTextPanel.gameObject.SetActive(false);
         countDownText.gameObject.SetActive(false);

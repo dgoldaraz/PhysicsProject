@@ -42,6 +42,13 @@ public class RocketEngine : MonoBehaviour {
         }
     }
 
+    public void UpdateFuelGUI()
+    {
+        if (onFuelUpdate != null)
+        {
+            onFuelUpdate(rocketName, fuelMass);
+        }
+    }
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -67,7 +74,7 @@ public class RocketEngine : MonoBehaviour {
                 fuelMass -= nextFuelInUse;
                 if(onFuelUpdate != null)
                 {
-                    //onFuelUpdate(rocketName, fuelMass);
+                    onFuelUpdate(rocketName, fuelMass);
                 }
                 physics.mass -= nextFuelInUse;
                 ExertForce();

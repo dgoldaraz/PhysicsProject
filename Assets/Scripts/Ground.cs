@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Ground : MonoBehaviour
 {
+    public float maxLandingSpeed = 100f;
 
     void OnTriggerEnter(Collider col)
     {
@@ -11,7 +12,7 @@ public class Ground : MonoBehaviour
             //We are on the floor, stops the spaceShip if the velocity is less than the maxVelAllowed
 
             PhysicsEngine physiscsRigidBody = col.gameObject.GetComponent<PhysicsEngine>();
-            if (physiscsRigidBody.velocityVector.magnitude * 100f < Manager.maxLandingSpeed)
+            if (physiscsRigidBody.velocityVector.magnitude * 100f < maxLandingSpeed)
             {
                 physiscsRigidBody.FreezeMovement();
                 AddForce[] forceComponent = col.gameObject.GetComponents<AddForce>();

@@ -5,7 +5,7 @@ public class RocketPlataform : MonoBehaviour
 {
 
     public bool isFinalPlataform = true;
-
+    public float maxLandingSpeed = 200f;
     void OnTriggerEnter(Collider col)
     {
         if (col.gameObject.CompareTag("Rocket"))
@@ -14,7 +14,7 @@ public class RocketPlataform : MonoBehaviour
 
             PhysicsEngine physiscsRigidBody = col.gameObject.GetComponent<PhysicsEngine>();
             float velocityMagnitude = physiscsRigidBody.velocityVector.magnitude * 100f;
-            if (velocityMagnitude <= Manager.maxLandingSpeed)
+            if (velocityMagnitude <= maxLandingSpeed)
             {
                 physiscsRigidBody.FreezeMovement();
                 AddForce[] forceComponent = col.gameObject.GetComponents<AddForce>();
