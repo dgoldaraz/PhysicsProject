@@ -24,6 +24,8 @@ public class RocketEngine : MonoBehaviour {
     public ParticleSystem engineParticle;
     private ParticleSystem.EmissionModule psEmit;
 
+    private SoundManager m_source;
+
 
     // Use this for initialization
     void Start()
@@ -40,6 +42,8 @@ public class RocketEngine : MonoBehaviour {
         {
             psEmit = engineParticle.emission;
         }
+
+        m_source = gameObject.GetComponent<SoundManager>();
     }
 
     public void UpdateFuelGUI()
@@ -58,12 +62,21 @@ public class RocketEngine : MonoBehaviour {
         }
         else
         {
+            if(thrustPercent > 0f)
+            {
+                if (m_source)
+                {
+                    m_source.Stop();
+                }
+            }
             thrustPercent = 0f;
             if(engineParticle && engineParticle.isPlaying)
             {
                 engineParticle.Stop();
                 engineParticle.Clear();
             }
+
+           
         }
 
         if(thrustPercent > 0.0f)
@@ -119,6 +132,14 @@ public class RocketEngine : MonoBehaviour {
 
     void IncreaseThrust()
     {
+        if(thrustPercent == 0)
+        {
+            if (m_source)
+            {
+                m_source.Play();
+            }
+        }
+
         thrustPercent = thrustPercent + increaseThrust;
     }
 }

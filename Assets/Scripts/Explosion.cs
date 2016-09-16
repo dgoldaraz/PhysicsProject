@@ -4,6 +4,8 @@ using System.Collections;
 public class Explosion : MonoBehaviour {
 
     public GameObject explosionObject;
+    public AudioClip explosionSound;
+
 
     void Start()
     {
@@ -15,6 +17,14 @@ public class Explosion : MonoBehaviour {
         //Destroy Object
         explosionObject.SetActive(true);
         gameObject.GetComponent<PhysicsEngine>().FreezeMovement();
+        AudioSource aSource = gameObject.GetComponent<AudioSource>();
+        aSource.Stop();
+        if(explosionSound)
+        {
+            aSource.clip = explosionSound;
+            aSource.Play();
+        }
+
         MeshRenderer[] meshes = gameObject.GetComponentsInChildren<MeshRenderer>();
         foreach(MeshRenderer m in meshes)
         {
